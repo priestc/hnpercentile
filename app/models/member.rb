@@ -4,10 +4,15 @@ require 'json'
 class Member < ActiveRecord::Base
   attr_accessible :karma, :username
 
+  def self.get_percentile(username)
+    member = self.where(:username => username).first!
+    member.update_karma
+    member.percentile
+  end
+
   def self.update_all_karma
     self.all.each do |member|
       member.update_karma
-      member.save
       sleep 1.0 # to be nice to the API provider
     end
   end
@@ -22,7 +27,6 @@ class Member < ActiveRecord::Base
       member = self.where(:username => username).first
       if not member
         member = self.create(:username => username, :karma => 0)
-        member.save
         new_members += 1
       end
     end
@@ -34,5 +38,11 @@ class Member < ActiveRecord::Base
     doc = open(url).read
     j = JSON.parse(doc)
     self.karma = j['karma']
+    save
   end
+  
+  def percentile
+    Member.where("karma < ?", karma).count / Member.count.to_f
+  end
+  
 end
