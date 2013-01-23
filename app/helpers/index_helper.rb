@@ -9,11 +9,4 @@ module IndexHelper
     end
     usernames
   end
-
-  def get_karma(username)
-    url = "http://api.thriftdb.com/api.hnsearch.com/users/" + username
-    doc = open(url).read
-    j = JSON.parse(doc)
-    j['karma']
-  end
 end
