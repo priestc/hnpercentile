@@ -4,7 +4,7 @@ class GetDateRegData < ActiveRecord::Migration
       url = "http://api.thriftdb.com/api.hnsearch.com/users/" + member.username
       doc = open(url).read
       j = JSON.parse(doc)
-      member.date_registered =j['created_ts'].to_date
+      member.date_registered =j['create_ts'].to_date
       sleep 1.0
     end
     nil
