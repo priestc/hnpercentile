@@ -22,6 +22,7 @@ class Member < ActiveRecord::Base
         puts "skipping, last update #{ago} hours ago."
       end
     end
+    nil
   end
 
   def self.crawl_and_make_users
