@@ -3,7 +3,7 @@ require 'json'
 require 'date'
 
 class Member < ActiveRecord::Base
-  attr_accessible :karma, :username
+  attr_accessible :karma, :username, :date_registered
 
   def self.get_percentile(username)
     member = self.where(:username => username).first!
@@ -34,15 +34,25 @@ class Member < ActiveRecord::Base
       username = item['item']['username']
       member = self.where(:username => username).first
       if not member
-        member = self.create(:username => username, :karma => 0)
         sleep 1.0 # to be nice to the API provider
-        member.update_karma
+        self.make_from_api(username)
         new_members += 1
       end
     end
     "Saw #{new_members} new users"
   end
 
+  def self.make_from_api(username)
+    url = "http://api.thriftdb.com/api.hnsearch.com/users/" + username
+    doc = open(url).read
+    j = JSON.parse(doc)
+    self.create(
+      :username => username,
+      :karma => j['karma'],
+      :date_registered => DateTime.strptime(j['create_ts'])
+    )
+  end
+    
   def update_karma
     url = "http://api.thriftdb.com/api.hnsearch.com/users/" + username
     doc = open(url).read
@@ -51,8 +61,15 @@ class Member < ActiveRecord::Base
     save
   end
   
-  def percentile
-    Member.where("karma < ?", karma).count / Member.count.to_f
+  def percentile(date)
+    if date
+      total_users = 2 #Member.where("date_registered "
+      below_karma = 3
+    else
+      total_users = Member.count
+      below_karma = Member.where("karma < ?", karma).count
+    end
+      below_karma / total_users.to_f
   end
   
 end
