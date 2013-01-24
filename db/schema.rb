@@ -11,13 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130123164220) do
+ActiveRecord::Schema.define(:version => 20130124181113) do
 
   create_table "members", :force => true do |t|
     t.string   "username"
     t.integer  "karma"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+    t.date     "date_registered"
   end
 
   add_index "members", ["username"], :name => "index_members_on_username", :unique => true
