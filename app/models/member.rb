@@ -35,6 +35,7 @@ class Member < ActiveRecord::Base
       member = self.where(:username => username).first
       if not member
         member = self.create(:username => username, :karma => 0)
+        sleep 1.0 # to be nice to the API provider
         member.update_karma
         new_members += 1
       end
