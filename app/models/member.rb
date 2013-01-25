@@ -63,13 +63,18 @@ class Member < ActiveRecord::Base
   
   def percentile(date=nil)
     if date
-      total_users = 2 #Member.where("date_registered "
-      below_karma = 3
+      start_date = date_registered.beginning_of_month
+      end_date = date_registered.end_of_month
+      total_users = Member.where(:date_registered => start_date..end_date)
     else
-      total_users = Member.count
-      below_karma = Member.where("karma < ?", karma).count
+      total_users = Member
     end
-      below_karma / total_users.to_f
+    
+    population = total_users.count
+    below_karma = total_users.where("karma < ?", karma).count
+    {"percentile" => below_karma / population.to_f,
+     "below_karma" => below_karma,
+     "population" => population}
   end
   
 end
