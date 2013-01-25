@@ -36,8 +36,8 @@ class Member < ActiveRecord::Base
     )
   end
     
-  def update_karma
-    if updated_at < DateTime.now - 6.hours
+  def update_karma(force)
+    if updated_at < DateTime.now - 6.hours or force
       url = "http://api.thriftdb.com/api.hnsearch.com/users/" + username
       doc = open(url).read
       j = JSON.parse(doc)

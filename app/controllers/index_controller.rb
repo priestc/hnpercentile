@@ -3,6 +3,8 @@ class IndexController < ApplicationController
     @member = Member.where(:username => params[:username]).first
     if not @member
       @member = Member.make_from_api(params[:username])
+    else
+      @member.update_karma(:force => true)
     end
     attrs = @member.attributes
     attrs[:percentile] = @member.percentile
