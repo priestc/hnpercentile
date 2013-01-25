@@ -7,6 +7,7 @@ class IndexController < ApplicationController
     end
     attrs = @member.attributes
     attrs[:percentile] = @member.percentile
+    attrs[:month_percentile] = @member.percentile(:date=>true)
     
     respond_to do |format|
       format.html # show.html.erb
