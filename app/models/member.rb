@@ -61,7 +61,7 @@ class Member < ActiveRecord::Base
     save
   end
   
-  def percentile(date)
+  def percentile(date=nil)
     if date
       total_users = 2 #Member.where("date_registered "
       below_karma = 3
