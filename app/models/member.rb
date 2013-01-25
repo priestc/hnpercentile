@@ -10,6 +10,7 @@ class Member < ActiveRecord::Base
     doc = open(url).read
     j = JSON.parse(doc)
     new_members = 0
+    updated_karma = 0
     j['results'].each do |item|
       username = item['item']['username']
       member = self.where(:username => username).first
@@ -18,10 +19,10 @@ class Member < ActiveRecord::Base
         self.make_from_api(username)
         new_members += 1
       else
-        member.update_karma
+        updated_karma += member.update_karma
       end
     end
-    "Saw #{new_members} new users"
+    "Saw #{new_members} new users, updated #{updated_karma} users' karma"
   end
 
   def self.make_from_api(username)
@@ -42,7 +43,9 @@ class Member < ActiveRecord::Base
       j = JSON.parse(doc)
       self.karma = j['karma']
       save
+      1
     end
+    0
   end
   
   def percentile(date=nil)
