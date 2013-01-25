@@ -5,26 +5,6 @@ require 'date'
 class Member < ActiveRecord::Base
   attr_accessible :karma, :username, :date_registered
 
-  def self.get_percentile(username)
-    member = self.where(:username => username).first!
-    member.update_karma
-    member.percentile
-  end
-
-  def self.update_all_karma
-    now = DateTime.now
-    self.all.each do |member|
-      if member.updated_at < now - 24.hours
-        member.update_karma
-        sleep 1.0 # to be nice to the API provider
-      else
-        ago = (Time.zone.now - member.updated_at) / 3600
-        puts "skipping, last update #{ago} hours ago."
-      end
-    end
-    nil
-  end
-
   def self.crawl_and_make_users
     url = "http://api.thriftdb.com/api.hnsearch.com/items/_search?sortby=create_ts%20desc&limit=100"
     doc = open(url).read
@@ -37,6 +17,8 @@ class Member < ActiveRecord::Base
         sleep 1.0 # to be nice to the API provider
         self.make_from_api(username)
         new_members += 1
+      else
+        member.update_karma
       end
     end
     "Saw #{new_members} new users"
@@ -54,11 +36,13 @@ class Member < ActiveRecord::Base
   end
     
   def update_karma
-    url = "http://api.thriftdb.com/api.hnsearch.com/users/" + username
-    doc = open(url).read
-    j = JSON.parse(doc)
-    self.karma = j['karma']
-    save
+    if updated_at < DateTime.now - 6.hours
+      url = "http://api.thriftdb.com/api.hnsearch.com/users/" + username
+      doc = open(url).read
+      j = JSON.parse(doc)
+      self.karma = j['karma']
+      save
+    end
   end
   
   def percentile(date=nil)
