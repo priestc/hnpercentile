@@ -44,8 +44,9 @@ class Member < ActiveRecord::Base
       self.karma = j['karma']
       save
       1
+    else
+      0
     end
-    0
   end
   
   def percentile(date=nil)
