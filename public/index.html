@@ -11,40 +11,56 @@
         border: 1px solid black;
         margin: 15px;
       }
+      
+      #content {
+        width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      
+      #error {
+        color: red;
+      }
+      
+      .percentile {
+        font-weight: bold;
+      }
     </style>
   </head>
   <body>
-    <h1>Hacker News Karma Percentile</h1>
-    <form>
-    Enter your Hacker News Username: <input id="username" type="text"> 
-    <input type="submit" value="See your Percentile">
-    </form>
-    <div id="error"></div>
-    <div id="result_box" style="display:none">
-      <h2><span class="username"></span> (<span class="karma"></span>)</h2>
-      As of: <span id="time"></span><br>
-      <hr>
-      <div id="overall">
-        <h3>Overall</h3>
-        Total users: <span class="total"></span><br>
-        Total users with less karma than you: <span class="below_karma"></span><br>
+    <div id="content">
+      <h1>Hacker News Karma Percentile</h1>
+      <form>
+      Enter your Hacker News Username: <input id="username" type="text"> 
+      <input type="submit" value="See your Percentile">
+      </form>
+      <div id="error"></div>
+      <div id="result_box" style="display:none">
+        <h2><span class="username"></span> (<span class="karma"></span>)</h2>
+        As of: <span id="time"></span><br>
+        <hr>
+        <div id="overall">
+          <h3>Overall</h3>
+          Total users: <span class="total"></span><br>
+          Total users with less karma than you: <span class="below_karma"></span><br>
+          Percentile: <span class="percentile"></span>
+        </div>
+        <hr>
+        <div id="reg_month">
+          <h3>Among users in your registration month (<span class="reg_month"></span>)</h3>
+          Total users: <span class="total"></span><br>
+          Total users with less karma than you: <span class="below_karma"></span><br>
         Percentile: <span class="percentile"></span>
+        </div>
       </div>
-      <hr>
-      <div id="reg_month">
-        <h3>Among users in your registration month (<span class="reg_month"></span>)</h3>
-        Total users: <span class="total"></span><br>
-        Total users with less karma than you: <span class="below_karma"></span><br>
-      Percentile: <span class="percentile"></span>
-      </div>
+      <h2>How it works</h2>
+      <p>A process crawls all items posted on <a href="http://news.ycombinator.com/">Hacker News</a> (link submissions, comments, etc) every
+      10 minutes, collects usernames and karma values and stores them into a database that this site uses.
+      Users who have not made a submission or comment on teh site after
+      January 25th 2013 may not be included in this site's database. All data comes from
+      the <a href="http://www.hnsearch.com/api">HNSearch API</a>. See code on <a href="https://github.com/priestc/hnpercentile">Github</a>. Contact: nbvfour at gmail.com.
+      </p>
     </div>
-    <h2>How it works</h2>
-    <p>A process crawls all items posted on <a href="http://news.ycombinator.com/">Hacker News</a> (link submissions, comments, etc) every
-    10 minutes, collects usernames and karma values and stores them into a database that this site uses.
-    Users who have not made a submission or comment on teh site after
-    January 25th 2013 may not be included in this site's database. All data comes from
-    the <a href="http://www.hnsearch.com/api">HNSearch API</a>. See code on <a href="https://github.com/priestc/hnpercentile">Github</a>. Contact: nbvfour at gmail.com.
-    </p>
     <script>
       var monthNames = ["January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"];
@@ -84,17 +100,16 @@
       });
     </script>
     <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-501381-13']);
+      _gaq.push(['_trackPageview']);
 
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-501381-13']);
-  _gaq.push(['_trackPageview']);
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
 
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-
-</script>
+    </script>
   </body>
 </html>
