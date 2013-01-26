@@ -12,9 +12,8 @@
     </form>
     <div id="error"></div>
     <div id="result_box" style="display:none">
-      <h2>Username</h2>
+      <h2><span class="username"></span> (<span class="karma"></span>)</h2>
       As of: <span id="time"></span><br>
-      Karma: <span id="karma"></span><br>
       <hr>
       <div id="overall">
         <h3>Overall</h3>
@@ -42,7 +41,7 @@
         var username = $('#username').val();
         $.ajax("/user/" + username + '.json').done(function(response) {
           $('#error').text('');
-          $('h2').text(username);
+          $('.username').text(username);
           var time = new Date(response['updated_at']);
           var overall = response['percentile'];
           var month = response['month_percentile'];
@@ -60,7 +59,7 @@
           $('#reg_month .below_karma').text(month['below_karma']);
           
           $('#time').text(time);
-          $('#karma').text(karma);
+          $('.karma').text(karma);
           $("#result_box").show();
         }).error(function(response) {
           $('#error').text("Invalid Username");
