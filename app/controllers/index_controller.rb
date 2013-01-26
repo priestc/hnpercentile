@@ -1,6 +1,6 @@
 class IndexController < ApplicationController
   def show
-    @member = Member.where(:username => params[:username]).first!
+    @member = Member.where(:username => params[:username]).first
     if not @member
       @member = Member.make_from_api(params[:username])
     else
