@@ -5,9 +5,13 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
   </head>
   <body>
+    <form>
     Enter your Hacker News Username: <input id="username" type="text"><br>
-    <button>See your Percentile</button>
+    <input type="submit" value="See your Percentile">
+    </form>
+    <div id="error"></div>
     <div id="result_box" style="display:none">
+      <h2>Username</h2>
       As of: <span id="time"></span><br>
       Karma: <span id="karma"></span><br>
       <hr>
@@ -15,21 +19,27 @@
       Total users with less karma than you: <span id="overall_below_karma"></span><br>
       Percentile against all users: <span id="overall_percentile"></span>
       <hr>
-      Total users on Hacker News with same reg month: <span id="month_total"></span><br>
-      Total users with less karma than you in same reg month: <span id="month_below_karma"></span><br>
+      Total users on Hacker News with same reg month (<span class="reg_month")</span>): <span id="month_total"></span><br>
+      Total users with less karma than you in same reg month (<span class="reg_month")</span>): <span id="month_below_karma"></span><br>
       Percentile against users in your reg month: <span id="month_percentile"></span>
     </div>
     <script>
       function to_percent(f) {
-        return (f * 100).toFixed(2) + '%'
+        return (f * 100).toFixed(2) + '%';
       }
-      $("button").click(function() {
+      $("form").submit(function() {
         var username = $('#username').val();
         $.ajax("/user/" + username + '.json').done(function(response) {
-          var time = new Date(response['updated_at'])
-          var overall = response['percentile']
-          var month = response['month_percentile']
+          $('#error').text('');
+          $('h2').text(username);
+          var time = new Date(response['updated_at']);
+          var overall = response['percentile'];
+          var month = response['month_percentile'];
           var karma = response['karma'];
+          var reg = new Date(response['date_registered']);
+          var month = reg.getMonth() + 1;
+          var year = reg.getFullYear();
+          
           
           $('#overall_percentile').text(to_percent(overall['percentile']));
           $('#overall_total').text(overall['population']);
@@ -42,7 +52,10 @@
           $('#time').text(time);
           $('#karma').text(karma);
           $("#result_box").show();
+        }).error(function(response) {
+          $('#error').text("Invalid Username");
         });
+        return false;
       });
     </script>
   </body>
