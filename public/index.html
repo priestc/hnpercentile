@@ -5,8 +5,9 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
   </head>
   <body>
+    <h1>Hacker News Karma Percentile</h1>
     <form>
-    Enter your Hacker News Username: <input id="username" type="text"><br>
+    Enter your Hacker News Username: <input id="username" type="text"> 
     <input type="submit" value="See your Percentile">
     </form>
     <div id="error"></div>
@@ -15,19 +16,29 @@
       As of: <span id="time"></span><br>
       Karma: <span id="karma"></span><br>
       <hr>
-      Total users on Hacker News: <span id="overall_total"></span><br>
-      Total users with less karma than you: <span id="overall_below_karma"></span><br>
-      Percentile against all users: <span id="overall_percentile"></span>
+      <div id="overall">
+        <h3>Overall</h3>
+        Total users: <span class="total"></span><br>
+        Total users with less karma than you: <span class="below_karma"></span><br>
+        Percentile: <span class="percentile"></span>
+      </div>
       <hr>
-      Total users on Hacker News with same reg month (<span class="reg_month")</span>): <span id="month_total"></span><br>
-      Total users with less karma than you in same reg month (<span class="reg_month")</span>): <span id="month_below_karma"></span><br>
-      Percentile against users in your reg month: <span id="month_percentile"></span>
+      <div id="reg_month">
+        <h3>Among users in your registration month (<span class="reg_month"></span>)</h3>
+        Total users: <span class="total"></span><br>
+        Total users with less karma than you: <span class="below_karma"></span><br>
+      Percentile: <span class="percentile"></span>
+      </div>
     </div>
     <script>
+      var monthNames = ["January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"];
+
       function to_percent(f) {
         return (f * 100).toFixed(2) + '%';
       }
       $("form").submit(function() {
+        $('#result_box').hide();
         var username = $('#username').val();
         $.ajax("/user/" + username + '.json').done(function(response) {
           $('#error').text('');
@@ -37,17 +48,16 @@
           var month = response['month_percentile'];
           var karma = response['karma'];
           var reg = new Date(response['date_registered']);
-          var month = reg.getMonth() + 1;
-          var year = reg.getFullYear();
           
+          $('.reg_month').text(monthNames[reg.getMonth()] + " " + reg.getFullYear());
           
-          $('#overall_percentile').text(to_percent(overall['percentile']));
-          $('#overall_total').text(overall['population']);
-          $('#overall_below_karma').text(overall['below_karma']);
+          $('#overall .percentile').text(to_percent(overall['percentile']));
+          $('#overall .total').text(overall['population']);
+          $('#overall .below_karma').text(overall['below_karma']);
           
-          $('#month_percentile').text(to_percent(month['percentile']));
-          $('#month_total').text(month['population']);
-          $('#month_below_karma').text(month['below_karma']);
+          $('#reg_month .percentile').text(to_percent(month['percentile']));
+          $('#reg_month .total').text(month['population']);
+          $('#reg_month .below_karma').text(month['below_karma']);
           
           $('#time').text(time);
           $('#karma').text(karma);
