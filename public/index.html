@@ -43,7 +43,7 @@
     10 minutes, collects usernames and karma values and stores them into a database that this site uses.
     Users who have not made a submission or comment on teh site after
     January 25th 2013 may not be included in this site's database. All data comes from
-    the <a href="http://www.hnsearch.com/api">HNSearch API</a>. Contact: nbvfour@gmail.com
+    the <a href="http://www.hnsearch.com/api">HNSearch API</a>. See code on <a href="https://github.com/priestc/hnpercentile">Github</a>. Contact: nbvfour at gmail.com.
     </p>
     <script>
       var monthNames = ["January", "February", "March", "April", "May", "June",
@@ -83,5 +83,18 @@
         return false;
       });
     </script>
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-501381-13']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
   </body>
 </html>
