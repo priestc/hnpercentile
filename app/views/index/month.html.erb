@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html>
+  <body>
+  <h1>Users registered in <%= @month %> <%= @year %></h1>
+  <% @members.each do |member| %>
+    <%= member.username %> (<%= member.karma %>)<br>
+  <% end %>
+  </body>
+</html>
