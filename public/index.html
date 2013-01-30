@@ -48,7 +48,7 @@
         </div>
         <hr>
         <div id="reg_month">
-          <h3>Among active users from your registration month (<span class="reg_month"></span>)</h3>
+          <h3>Among active users from your registration month (<a href="ff" class="reg_month"></a>)</h3>
           Total users: <span class="total value"></span><br>
           Total users with less karma than you: <span class="below_karma value"></span><br>
           Your rank: <span class="rank value"></span><br>
@@ -89,7 +89,10 @@
           var karma = response['karma'];
           var reg = new Date(response['date_registered']);
           
-          $('.reg_month').text(monthNames[reg.getMonth()] + " " + reg.getFullYear());
+          var month_name = monthNames[reg.getMonth()];
+          var full_year = reg.getFullYear();
+          $('.reg_month').text(month_name + " " + full_year);
+          $('.reg_month').attr('href', '/month/' + month_name.toLowerCase() + '-' + full_year);
           
           var bc = overall['below_karma']
           var total = overall['population']

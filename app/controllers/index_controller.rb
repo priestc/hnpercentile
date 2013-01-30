@@ -21,7 +21,7 @@ class IndexController < ApplicationController
     @year = params['year']
     start_date = Date.parse("#@year-#@month-1")
     end_date = start_date.end_of_month
-    @members = Member.where(:date_registered => start_date..end_date)
+    @members = Member.where(:date_registered => start_date..end_date).order("karma DESC")
     @percent_of_total_by_users = @members.count / Member.count.to_f
     @percent_of_total_by_karma = @members.sum(:karma) / Member.sum(:karma).to_f
     

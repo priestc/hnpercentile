@@ -3,7 +3,8 @@ Hnpercentile::Application.routes.draw do
   # first created -> highest priority.
 
   match 'user/:username' => 'index#show'
-
+  match 'month/:month-:year' => 'index#month'
+  
   # Sample of regular route:
   #   match 'products/:id' => 'catalog#view'
   # Keep in mind you can assign values other than :controller and :action
