@@ -7,6 +7,9 @@
         margin-left: auto;
         margin-right: auto;
       }
+      #userlist li {
+        background: pink;
+      }
     </style>
   </head>
   <body>
@@ -17,9 +20,9 @@
       <%= number_with_precision(@percent_of_total_by_users) %>% of entire site by users<br>
       <%= number_with_precision(@percent_of_total_by_karma) %>% of entire site by karma
   </p>
-  <ol>
+  <ol id="userlist">
   <% @members.each do |member| %>
-    <li><%= member.username %> (<%= member.karma %>)</li>
+    <li style="width: <%= member.karma / @max_karma.to_f * 100 %>%"><%= member.username %> (<%= member.karma %>)</li>
   <% end %>
   </ol>
   </div>
