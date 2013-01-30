@@ -32,7 +32,9 @@
   <body>
     <div id="content">
       <h1>Users registered in <%= @month.capitalize %> <%= @year %></h1>
-      <a href="/">Home</a>
+      <a href="<%= @prev_month_link %>"><%= @prev_month %></a> - 
+      <a href="/">Home</a> - 
+      <a href="<%= @next_month_link %>"><%= @next_month %></a>
       <p>
         <%= number_with_precision(@percent_of_total_by_users) %>% of entire site by users<br>
         <%= number_with_precision(@percent_of_total_by_karma) %>% of entire site by karma
