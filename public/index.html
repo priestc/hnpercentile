@@ -43,6 +43,7 @@
           <h3>Overall</h3>
           Total users: <span class="total"></span><br>
           Total users with less karma than you: <span class="below_karma"></span><br>
+          Your rank: <span class="rank"></span><br>
           Percentile: <span class="percentile"></span>
         </div>
         <hr>
@@ -50,6 +51,7 @@
           <h3>Among users in your registration month (<span class="reg_month"></span>)</h3>
           Total users: <span class="total"></span><br>
           Total users with less karma than you: <span class="below_karma"></span><br>
+          Your rank: <span class="rank"></span><br>
         Percentile: <span class="percentile"></span>
         </div>
       </div>
@@ -62,6 +64,13 @@
       </p>
     </div>
     <script>
+      (function(o) {
+        Number.getOrdinalFor = function(intNum, includeNumber) {
+          return (includeNumber ? intNum : "")
+            + (o[((intNum = Math.abs(intNum % 100)) - 20) % 10] || o[intNum] || "th");
+        };
+      })([,"st","nd","rd"]);
+
       var monthNames = ["January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"];
 
@@ -82,13 +91,19 @@
           
           $('.reg_month').text(monthNames[reg.getMonth()] + " " + reg.getFullYear());
           
+          var bc = overall['below_karma']
+          var total = overall['population']
           $('#overall .percentile').text(to_percent(overall['percentile']));
-          $('#overall .total').text(overall['population']);
-          $('#overall .below_karma').text(overall['below_karma']);
+          $('#overall .total').text(total);
+          $('#overall .below_karma').text(bc);
+          $('#overall .rank').text(Number.getOrdinalFor(Number(total) - Number(bc), true));
           
+          var bc = month['below_karma']
+          var total = month['population']
           $('#reg_month .percentile').text(to_percent(month['percentile']));
-          $('#reg_month .total').text(month['population']);
-          $('#reg_month .below_karma').text(month['below_karma']);
+          $('#reg_month .total').text(total);
+          $('#reg_month .below_karma').text(bc);
+          $('#reg_month .rank').text(Number.getOrdinalFor(Number(total) - Number(bc), true));
           
           $('#time').text(time);
           $('.karma').text(karma);
