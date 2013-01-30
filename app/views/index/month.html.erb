@@ -31,7 +31,7 @@
   </head>
   <body>
     <div id="content">
-      <h1>Users registered in <%= @month %> <%= @year %></h1>
+      <h1>Users registered in <%= @month.capitalize %> <%= @year %></h1>
       <a href="/">Home</a>
       <p>
         <%= number_with_precision(@percent_of_total_by_users) %>% of entire site by users<br>
