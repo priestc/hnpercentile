@@ -27,11 +27,11 @@ class IndexController < ApplicationController
     @percent_of_total_by_karma = @members.sum(:karma) / Member.sum(:karma).to_f * 100
     
     @next_month_obj = (end_date + 15.days).beginning_of_month
-    @next_month = @next_month_obj.strftime("%Y %B")
+    @next_month = @next_month_obj.strftime("%B %Y")
     @next_month_link = "/month/#@next_month".sub(' ', '-').downcase
     
     @prev_month_obj = (start_date - 15.days).beginning_of_month
-    @prev_month = @prev_month_obj.strftime("%Y %B")
+    @prev_month = @prev_month_obj.strftime("%B %Y")
     @prev_month_link = "/month/#@prev_month".sub(' ', '-').downcase
     
     respond_to do |format|
