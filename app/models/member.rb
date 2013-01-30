@@ -41,7 +41,7 @@ class Member < ActiveRecord::Base
       url = "http://api.thriftdb.com/api.hnsearch.com/users/" + username
       doc = open(url).read
       j = JSON.parse(doc)
-      self.karma = j['karma']
+      karma = j['karma']
       save
       1
     else
@@ -60,7 +60,7 @@ class Member < ActiveRecord::Base
     
     population = total_users.count
     below_karma = total_users.where("karma < ?", karma).count
-    {"percentile" => below_karma / population.to_f,
+    {"percentile" => (below_karma+1) / population.to_f, # +1 includes the user himself
      "below_karma" => below_karma,
      "population" => population}
   end
