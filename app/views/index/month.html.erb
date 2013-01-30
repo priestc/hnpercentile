@@ -7,24 +7,40 @@
         margin-left: auto;
         margin-right: auto;
       }
-      #userlist li {
+      
+      li {
+        position: relative;
+      }
+      .bar {
+        z-index: 1;
+        position: absolute;
         background: pink;
+        border: 1px solid #A6A6A6;
+      }
+      .username {
+        z-index: 10;
+        font-weight: bold;
+        position: absolute;
+        padding-left: 10px;
       }
     </style>
   </head>
   <body>
-  <div id="content">
-  <h1>Users registered in <%= @month %> <%= @year %></h1>
-  <a href="/">Home</a>
-  <p>
-      <%= number_with_precision(@percent_of_total_by_users) %>% of entire site by users<br>
-      <%= number_with_precision(@percent_of_total_by_karma) %>% of entire site by karma
-  </p>
-  <ol id="userlist">
-  <% @members.each do |member| %>
-    <li style="width: <%= member.karma / @max_karma.to_f * 100 %>%"><%= member.username %> (<%= member.karma %>)</li>
-  <% end %>
-  </ol>
-  </div>
+    <div id="content">
+      <h1>Users registered in <%= @month %> <%= @year %></h1>
+      <a href="/">Home</a>
+      <p>
+        <%= number_with_precision(@percent_of_total_by_users) %>% of entire site by users<br>
+        <%= number_with_precision(@percent_of_total_by_karma) %>% of entire site by karma
+      </p>
+      <ol id="userlist">
+      <% @members.each do |member| %>
+        <li>
+          <div class="username"><%= member.username %> (<%= member.karma %>)</div>
+          <div class="bar" style="width: <%= member.karma / @max_karma.to_f * 100 %>%">&nbsp;</div>
+        </li>
+      <% end %>
+      </ol>
+    </div>
   </body>
 </html>
