@@ -3,6 +3,7 @@
   <head>
     <title>Hacker News percentile</title>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="/assets/index.js?body=1" type="text/javascript"></script>
     <style>
       #result_box {
         background: #DFDFDF;
@@ -55,6 +56,8 @@
         Percentile: <span class="percentile value"></span>
         </div>
       </div>
+      <h2>Other Links</h2>
+      <a href="/overall">Overall karma leaders</a>
       <h2>How it works</h2>
       <p>A process crawls all items posted on <a href="http://news.ycombinator.com/">Hacker News</a> (link submissions, comments, etc) every
       10 minutes, collects usernames and karma values and stores them into a database that this site uses.
@@ -63,60 +66,7 @@
       the <a href="http://www.hnsearch.com/api">HNSearch API</a>. See code on <a href="https://github.com/priestc/hnpercentile">Github</a>. Contact: nbvfour at gmail.com.
       </p>
     </div>
-    <script>
-      (function(o) {
-        Number.getOrdinalFor = function(intNum, includeNumber) {
-          return (includeNumber ? intNum : "")
-            + (o[((intNum = Math.abs(intNum % 100)) - 20) % 10] || o[intNum] || "th");
-        };
-      })([,"st","nd","rd"]);
-
-      var monthNames = ["January", "February", "March", "April", "May", "June",
-        "July", "August", "September", "October", "November", "December"];
-
-      function to_percent(f) {
-        return (f * 100).toFixed(2) + '%';
-      }
-      $("form").submit(function() {
-        $('#result_box').hide();
-        var username = $('#username').val();
-        $.ajax("/user/" + username + '.json').done(function(response) {
-          $('#error').text('');
-          $('.username').text(username);
-          var time = new Date(response['updated_at']);
-          var overall = response['percentile'];
-          var month = response['month_percentile'];
-          var karma = response['karma'];
-          var reg = new Date(response['date_registered']);
-          
-          var month_name = monthNames[reg.getMonth()];
-          var full_year = reg.getFullYear();
-          $('.reg_month').text(month_name + " " + full_year);
-          $('.reg_month').attr('href', '/month/' + month_name.toLowerCase() + '-' + full_year);
-          
-          var bc = overall['below_karma']
-          var total = overall['population']
-          $('#overall .percentile').text(to_percent(overall['percentile']));
-          $('#overall .total').text(total);
-          $('#overall .below_karma').text(bc);
-          $('#overall .rank').text(Number.getOrdinalFor(Number(total) - Number(bc), true));
-          
-          var bc = month['below_karma']
-          var total = month['population']
-          $('#reg_month .percentile').text(to_percent(month['percentile']));
-          $('#reg_month .total').text(total);
-          $('#reg_month .below_karma').text(bc);
-          $('#reg_month .rank').text(Number.getOrdinalFor(Number(total) - Number(bc), true));
-          
-          $('#time').text(time);
-          $('.karma').text(karma);
-          $("#result_box").show();
-        }).error(function(response) {
-          $('#error').text("Invalid Username");
-        });
-        return false;
-      });
-    </script>
+    
     <script type="text/javascript">
       var _gaq = _gaq || [];
       _gaq.push(['_setAccount', 'UA-501381-13']);

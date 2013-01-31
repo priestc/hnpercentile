@@ -39,4 +39,13 @@ class IndexController < ApplicationController
       format.json { render json: @members }
     end
   end
+  
+  def overall
+    @members = Member.order("karma DESC").limit(100)
+    @max_karma = @members.first.karma
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: @members }
+    end
+  end
 end
