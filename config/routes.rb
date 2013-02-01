@@ -6,6 +6,7 @@ Hnpercentile::Application.routes.draw do
   match 'month/:month-:year' => 'index#month'
   match 'overall' => "index#overall"
   match '' => 'index#home'
+  match 'superstars' => "index#superstars"
   
   # Sample of regular route:
   #   match 'products/:id' => 'catalog#view'

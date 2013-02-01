@@ -43,6 +43,7 @@ class Member < ActiveRecord::Base
       doc = open(url).read
       j = JSON.parse(doc)
       karma = j['karma']
+      karm_per_day = karma / (Date.now - date_registered).to_f
       save
       touch
       1
