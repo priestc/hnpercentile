@@ -1,4 +1,6 @@
 class IndexController < ApplicationController
+  caches_page :overall, :expires_in => 5.minutes
+  
   def show
     @member = Member.where(:username => params[:username]).first
     if not @member
