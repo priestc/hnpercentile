@@ -10,6 +10,7 @@
 
 li {
   position: relative;
+  height: 19px;
 }
 
 .bar {
@@ -25,7 +26,7 @@ li {
   top: 0;
   font-weight: bold;
   position: absolute;
-  padding-left: 10px;
+  padding-left: 5px;
 }
 
 #result_box {
