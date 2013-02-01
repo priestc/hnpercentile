@@ -4,7 +4,7 @@
   <ol id="userlist">
   <% @members.each do |member| %>
     <li>
-      <div class="username"><%= member.username %> (<%= member.karma %>)</div>
+      <div class="username"><%= member.username %> <span class='parenthesis'>(<%= member.karma %>)</span></div>
       <div class="bar" style="width: <%= member.karma / @max_karma.to_f * 100 %>%">&nbsp;</div>
     </li>
   <% end %>
