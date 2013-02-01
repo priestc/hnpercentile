@@ -85,7 +85,7 @@ class Member < ActiveRecord::Base
      "population" => population}
   end
   
-  def per_day_perentile
+  def per_day_percentile
     population = Member.count
     below_karma = Member.where("karma_per_day < ?", karma_per_day).count
     {"percentile" => (below_karma+1) / population.to_f, # +1 includes the user himself

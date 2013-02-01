@@ -9,9 +9,9 @@ class IndexController < ApplicationController
       @member.update_karma(:force => true)
     end
     attrs = @member.attributes
-    attrs[:percentile] = @member.percentile
-    attrs[:month_percentile] = @member.percentile(:date=>true)
-    attrs[:per_day_percentile] = @member.per_day_percentile
+    attrs[:overall_data] = @member.percentile
+    attrs[:month_data] = @member.percentile(:date=>true)
+    attrs[:speed_data] = @member.per_day_percentile
     
     respond_to do |format|
       format.html # show.html.erb
