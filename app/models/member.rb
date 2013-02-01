@@ -19,6 +19,7 @@ class Member < ActiveRecord::Base
         self.make_from_api(username)
         new_members += 1
       else
+        sleep 0.5
         updated_karma += member.update_karma
       end
     end
@@ -37,8 +38,6 @@ class Member < ActiveRecord::Base
   end
     
   def update_karma(force=false)
-    puts updated_at, DateTime.now - 6.hours
-    puts updated_at < DateTime.now - 6.hours
     if updated_at < DateTime.now - 6.hours or force
       url = "http://api.thriftdb.com/api.hnsearch.com/users/" + username
       doc = open(url).read
