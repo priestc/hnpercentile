@@ -30,10 +30,22 @@ class Member < ActiveRecord::Base
     url = "http://api.thriftdb.com/api.hnsearch.com/users/" + username
     doc = open(url).read
     j = JSON.parse(doc)
+    
+    date_registered = DateTime.strptime(j['create_ts'])
+    karma = j['karma']
+    date_range = (Date.today - date_registered).to_f
+    
+    if date_range > 1
+      kpd = karma / date_range
+    else
+      kpd = karma
+    end
+    
     self.create(
       :username => username,
-      :karma => j['karma'],
-      :date_registered => DateTime.strptime(j['create_ts'])
+      :karma => karma,
+      :karma_per_day => kpd,
+      :date_registered => date_registered
     )
   end
     

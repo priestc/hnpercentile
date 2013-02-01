@@ -57,7 +57,7 @@ class IndexController < ApplicationController
   end
   
   def superstars
-    @members = Member.order("karma_per_day DESC").limit(100)
+    @members = Member.where('karma_per_day > 0').order("karma_per_day DESC").limit(100)
     @max_karma_per_day = @members.first.karma_per_day
     respond_to do |format|
       format.html # show.html.erb
