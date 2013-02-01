@@ -11,7 +11,8 @@ class IndexController < ApplicationController
     attrs = @member.attributes
     attrs[:percentile] = @member.percentile
     attrs[:month_percentile] = @member.percentile(:date=>true)
-
+    attrs[:per_day_percentile] = @member.per_day_percentile
+    
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: attrs }

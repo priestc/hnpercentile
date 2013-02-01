@@ -69,7 +69,7 @@ class Member < ActiveRecord::Base
     end
   end
   
-  def percentile(date=nil)
+  def percentile(date=false)
     if date
       start_date = date_registered.beginning_of_month
       end_date = date_registered.end_of_month
@@ -82,6 +82,14 @@ class Member < ActiveRecord::Base
     below_karma = total_users.where("karma < ?", karma).count
     {"percentile" => (below_karma+1) / population.to_f, # +1 includes the user himself
      "below_karma" => below_karma,
+     "population" => population}
+  end
+  
+  def per_day_perentile
+    population = Member.count
+    below_karma = Member.where("karma_per_day < ?", karma_per_day).count
+    {"percentile" => (below_karma+1) / population.to_f, # +1 includes the user himself
+     "below_karma_per_day" => below_karma,
      "population" => population}
   end
   

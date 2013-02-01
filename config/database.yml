@@ -5,7 +5,7 @@
 #   gem 'sqlite3'
 development:
   adapter: postgresql
-  database: percentile
+  database: hnkarma
   username: chris
   password: spatula
 
