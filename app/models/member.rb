@@ -67,4 +67,12 @@ class Member < ActiveRecord::Base
      "population" => population}
   end
   
+  def get_width(max_karma)
+    if karma < 0
+      0
+    else
+      karma / max_karma.to_f * 100
+    end
+  end
+  
 end

@@ -11,7 +11,7 @@
   <% @members.each do |member| %>
     <li>
       <div class="username"><%= member.username %> (<%= member.karma %>)</div>
-      <div class="bar" style="width: <%= member.karma / @max_karma.to_f * 100 %>%">&nbsp;</div>
+      <div class="bar" style="width: <%= member.get_width(@max_karma) %>%">&nbsp;</div>
     </li>
   <% end %>
   </ol>
