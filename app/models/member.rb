@@ -57,7 +57,6 @@ class Member < ActiveRecord::Base
       self.karma = j['karma']
       day_range = (Date.today - date_registered).to_f
       if day_range > 1
-        puts "KOWABUNGA"
         self.karma_per_day = self.karma / day_range
       else
         self.karma_per_day = self.karma
