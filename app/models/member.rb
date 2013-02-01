@@ -43,7 +43,12 @@ class Member < ActiveRecord::Base
       doc = open(url).read
       j = JSON.parse(doc)
       karma = j['karma']
-      karm_per_day = karma / (Date.now - date_registered).to_f
+      day_range = (Date.now - date_registered).to_f
+      if day_range > 1
+        karma_per_day = karma / day_range
+      else
+        karma_per_day = karma
+      end
       save
       touch
       1
