@@ -1,0 +1,50 @@
+<div id="content">
+  <h1>Hacker News Karma Percentile</h1>
+  <form>
+  Enter your Hacker News Username: <input id="username" type="text"> 
+  <input type="submit" value="See your Percentile">
+  </form>
+  <div id="error"></div>
+  <div id="result_box" style="display:none">
+    <h2><span class="uname"></span> (<span class="karma"></span>)</h2>
+    As of: <span id="time"></span><br>
+    <hr>
+    <div id="overall">
+      <h3>Among all active users</h3>
+      Total users: <span class="total value"></span><br>
+      Total users with less karma than you: <span class="below_karma value"></span><br>
+      Your rank: <span class="rank value"></span><br>
+      Percentile: <span class="percentile value"></span>
+    </div>
+    <hr>
+    <div id="reg_month">
+      <h3>Among active users from your registration month (<a href="ff" class="reg_month"></a>)</h3>
+      Total users: <span class="total value"></span><br>
+      Total users with less karma than you: <span class="below_karma value"></span><br>
+      Your rank: <span class="rank value"></span><br>
+    Percentile: <span class="percentile value"></span>
+    </div>
+  </div>
+  <h2>Other Links</h2>
+  <a href="/overall">Overall karma leaders</a>
+  <h2>How it works</h2>
+  <p>A process crawls all items posted on <a href="http://news.ycombinator.com/">Hacker News</a> (link submissions, comments, etc) every
+  10 minutes, collects usernames and karma values and stores them into a database that this site uses.
+  Users who have not made a submission or comment on the site after
+  January 25th 2013 may not be included in this site's database. All data comes from
+  the <a href="http://www.hnsearch.com/api">HNSearch API</a>. See code on <a href="https://github.com/priestc/hnpercentile">Github</a>. Contact: nbvfour at gmail.com.
+  </p>
+</div>
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-501381-13']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>

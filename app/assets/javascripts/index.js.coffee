@@ -18,7 +18,7 @@ $ ->
     username = $("#username").val()
     $.ajax("/user/" + username + ".json").done((response) ->
       $("#error").text ""
-      $(".username").text username
+      $(".uname").text username
       time = new Date(response["updated_at"])
       overall = response["percentile"]
       month = response["month_percentile"]

@@ -48,4 +48,11 @@ class IndexController < ApplicationController
       format.json { render json: @members }
     end
   end
+  
+  def home
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: {} }
+    end
+  end
 end
