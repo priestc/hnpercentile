@@ -3,7 +3,7 @@ require 'json'
 require 'date'
 
 class Member < ActiveRecord::Base
-  attr_accessible :karma, :username, :date_registered
+  attr_accessible :karma, :username, :date_registered, :karma_per_day
 
   def self.crawl_and_make_users
     url = "http://api.thriftdb.com/api.hnsearch.com/items/_search?sortby=create_ts%20desc&limit=100"
@@ -54,12 +54,13 @@ class Member < ActiveRecord::Base
       url = "http://api.thriftdb.com/api.hnsearch.com/users/" + username
       doc = open(url).read
       j = JSON.parse(doc)
-      karma = j['karma']
+      self.karma = j['karma']
       day_range = (Date.today - date_registered).to_f
       if day_range > 1
-        karma_per_day = karma / day_range
+        puts "KOWABUNGA"
+        self.karma_per_day = self.karma / day_range
       else
-        karma_per_day = karma
+        self.karma_per_day = self.karma
       end
       save
       touch
