@@ -85,6 +85,10 @@ class Member < ActiveRecord::Base
      "population" => population}
   end
   
+  def age
+    (Date.today - date_registered).to_i
+  end
+  
   def per_day_percentile
     population = Member.count
     below_karma = Member.where("karma_per_day < ?", karma_per_day).count

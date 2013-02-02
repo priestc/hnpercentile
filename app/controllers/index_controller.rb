@@ -61,8 +61,15 @@ class IndexController < ApplicationController
   end
   
   def superstars
-    @members = Member.order("karma_per_day DESC").limit(100)
+    @members = Member.where('date_registered < ?', Date.today - 7.days).order("karma_per_day DESC").limit(100)
     @max_karma_per_day = @members.first.karma_per_day
+    @max_age = 0
+    @members.each do |member|
+      if member.age > @max_age
+        @max_age = member.age.to_f
+      end
+    end
+    
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @members }
