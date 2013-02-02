@@ -1,0 +1,13 @@
+<div id="content">
+  <h1>All Months</h1>
+  <a href="/">Home</a>
+  <ol>
+  <% @months.each do |name,data| %>
+    <li>
+      <a href="/month/<%= data[:link] %>"><%= name %></a>
+      <div class="double_bar" style="background: blue; width: <%= data[:users_percent] * 2 %>%">&nbsp;</div><span class='parenthesis'><%= number_with_precision(data[:users_percent]) %>% of all usera</span>
+      <div class="double_bar" style="background: red; width: <%= data[:karma_percent] * 2 %>%">&nbsp;</div><span class='parenthesis'><%= number_with_precision(data[:karma_percent]) %>% of all karma</span>
+    </li>
+  <% end %>
+  </ol>
+</div>
