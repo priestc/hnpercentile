@@ -1,5 +1,6 @@
 class IndexController < ApplicationController
   caches_page :overall, :expires_in => 5.minutes
+  caches_page :months, :expires_in => 55.minutes
   
   def show
     @member = Member.where(:username => params[:username]).first
@@ -22,14 +23,14 @@ class IndexController < ApplicationController
   def month
     @month = params['month']
     @year = params['year']
-    start_date = Date.parse("#@year-#@month-1")
-    end_date = start_date.end_of_month
-    @members = Member.where(:date_registered => start_date..end_date).order("karma DESC")
+    @members = Member.users_for_month(@month, @year)
     @max_karma = @members.first.karma
     @percent_of_total_by_users = @members.count / Member.count.to_f * 100
     @percent_of_total_by_karma = @members.sum(:karma) / Member.sum(:karma).to_f * 100
     
-    @next_month_obj = (end_date + 15.days).beginning_of_month
+    start_date = Date.parse("#@year-#@month-1")
+    
+    @next_month_obj = (start_date + 35.days).beginning_of_month
     @next_month = @next_month_obj.strftime("%B %Y")
     @next_month_link = "/month/#@next_month".sub(' ', '-').downcase
     
@@ -79,6 +80,28 @@ class IndexController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @members }
+    end
+  end
+  
+  def all_months
+    @month_names = Member.order('date_registered').map { |d| d.date_registered.strftime('%B %Y') }.uniq
+    total_users = Member.count
+    total_karma = Member.sum('karma')
+    
+    @months = {}
+    @month_names.each do |month_year|
+      data = {}
+      month, year = month_year.split(' ')
+      users = Member.users_for_month(month, year)
+      data[:users_percent] = users.count / total_users.to_f * 100
+      data[:karma_percent] = users.sum('karma') / total_karma.to_f * 100
+      data[:link] = month_year.downcase.sub(' ', '-')
+      @months[month_year] = data
+    end
+    
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: @months }
     end
   end
 end

@@ -4,6 +4,7 @@ Hnpercentile::Application.routes.draw do
 
   match 'user/:username' => 'index#show'
   match 'month/:month-:year' => 'index#month'
+  match 'months' => "index#all_months"
   match 'overall' => "index#overall"
   match '' => 'index#home'
   match 'superstars' => "index#superstars"

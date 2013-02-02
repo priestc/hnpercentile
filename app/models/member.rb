@@ -5,6 +5,12 @@ require 'date'
 class Member < ActiveRecord::Base
   attr_accessible :karma, :username, :date_registered, :karma_per_day
 
+  def self.users_for_month(month, year)
+    start_date = Date.parse("#{year}-#{month}-1")
+    end_date = start_date.end_of_month
+    Member.where(:date_registered => start_date..end_date).order("karma DESC")
+  end
+  
   def self.crawl_and_make_users
     url = "http://api.thriftdb.com/api.hnsearch.com/items/_search?sortby=create_ts%20desc&limit=100"
     doc = open(url).read
