@@ -2,15 +2,15 @@
   <h1>Karma Superstars</h1>
   <a href="/">Home</a>
   <p>
-  These are the users who have acumulated their karma the quickest. Brown bars are for people who have been on the site the longest. Green bars are for newer users. Users who are younger than 7 days are excluded.
+  These are the users who have acumulated their karma the quickest. Brown bars are for users who have been on the site the longest. Green bars are for newer users. Users who are younger than 7 days are excluded.
   </p>
   <ol id="userlist">
   <% @members.each do |member| %>
     <li>
       <div class="username">
-      <%= member.username %> (<%= number_with_precision(member.karma_per_day) %> per day, <%= member.age %> days old)
+      <%= member.username %> <span class="parenthesis">(<%= number_with_precision(member.karma_per_day) %> per day, <%= member.age %> days old)</span>
       </div>
-      <div class="bar" style="background: <%= gradient(0x98FA9C, 0x7D5B36, (member.age / @max_age) * 100) %>;width: <%= member.karma_per_day / @max_karma_per_day.to_f * 100 %>%">&nbsp;</div>
+      <div class="bar" style="background: <%= gradient(0xDDFFDB, 0xCCBEA1, (member.age / @max_age) * 100) %>;width: <%= member.karma_per_day / @max_karma_per_day.to_f * 100 %>%">&nbsp;</div>
     </li>
   <% end %>
   </ol>
