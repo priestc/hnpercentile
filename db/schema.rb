@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130124164151) do
+ActiveRecord::Schema.define(:version => 20130203035829) do
 
   create_table "members", :force => true do |t|
     t.string   "username"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(:version => 20130124164151) do
     t.float    "karma_per_day"
   end
 
+  add_index "members", ["date_registered"], :name => "index_members_on_date_registered"
   add_index "members", ["username"], :name => "index_members_on_username", :unique => true
 
 end

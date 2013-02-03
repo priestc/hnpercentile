@@ -1,5 +1,6 @@
 class IndexController < ApplicationController
   caches_page :overall, :expires_in => 5.minutes
+  caches_page :superstars, :expires_in => 5.minutes
   caches_page :months, :expires_in => 55.minutes
   
   def show
