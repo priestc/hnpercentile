@@ -1,20 +1,20 @@
 class IndexController < ApplicationController
   def show
     uname = params[:username].strip
-    @member = Member.where(:username => uname).first
-    if not @member
-      @member = Member.make_from_api(uname)
+    member = Member.where(:username => uname).first
+    if not member
+      member = Member.make_from_api(uname)
     else
-      @member.update_karma(:force => true)
+      member.update_karma(:force => true)
     end
-    attrs = @member.attributes
-    attrs[:overall_data] = @member.percentile
-    attrs[:month_data] = @member.percentile(:date=>true)
-    attrs[:speed_data] = @member.per_day_percentile
+    @attrs = member.attributes
+    @attrs[:overall_data] = member.percentile
+    @attrs[:month_data] = member.percentile(:date=>true)
+    @attrs[:speed_data] = member.per_day_percentile
     
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: attrs }
+      format.json { render json: @attrs }
     end
   end
   
