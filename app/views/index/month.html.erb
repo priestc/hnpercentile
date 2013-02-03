@@ -10,7 +10,7 @@
   <ol id="userlist">
   <% @members.each do |member| %>
     <li>
-      <div class="username"><%= member.username %> <span class="parenthesis">(<%= member.karma %>)</span></div>
+      <div class="username"><a href="/user/<%= member.username %>"><%= member.username %></a> <span class="parenthesis">(<%= member.karma %>)</span></div>
       <div class="bar" style="width: <%= member.get_width(@max_karma) %>%">&nbsp;</div>
     </li>
   <% end %>

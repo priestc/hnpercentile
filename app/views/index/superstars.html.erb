@@ -8,7 +8,7 @@
   <% @members.each do |member| %>
     <li>
       <div class="username">
-      <%= member.username %> <span class="parenthesis">(<%= number_with_precision(member.karma_per_day) %> per day, <%= member.age %> days old)</span>
+      <a href="/user/<%= member.username %>"><%= member.username %></a> <span class="parenthesis">(<%= number_with_precision(member.karma_per_day) %> per day, <%= member.age %> days old)</span>
       </div>
       <div class="bar" style="background: <%= gradient(0xDDFFDB, 0xCCBEA1, (member.age / @max_age) * 100) %>;width: <%= member.karma_per_day / @max_karma_per_day.to_f * 100 %>%">&nbsp;</div>
     </li>

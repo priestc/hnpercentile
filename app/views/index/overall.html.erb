@@ -7,7 +7,7 @@
   <ol id="userlist">
   <% @members.each do |member| %>
     <li>
-      <div class="username"><%= member.username %> <span class='parenthesis'>(<%= member.karma %>, <%= member.age %> days old)</span></div>
+      <div class="username"><a href="/user/<%= member.username %>"><%= member.username %></a> <span class='parenthesis'>(<%= member.karma %>, <%= member.age %> days old)</span></div>
       <div class="bar" style="background: <%= gradient(0xDDFFDB, 0xCCBEA1, (member.age / @max_age) * 100) %>; width: <%= member.get_width(@max_karma) %>%">&nbsp;</div>
     </li>
   <% end %>

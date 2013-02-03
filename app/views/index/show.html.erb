@@ -12,7 +12,7 @@
     </tr>
     <tr>  
       <th>Overall Rank</th>
-      <td><%= @attrs[:overall_data]['population'] - @attrs[:overall_data]['below_karma'] %> / <%= @attrs[:overall_data]['population'] %></td>
+      <td><%= (@attrs[:overall_data]['population'] - @attrs[:overall_data]['below_karma']).ordinalize %> / <%= @attrs[:overall_data]['population'] %></td>
     </tr>
     <tr>  
       <th>Overall Percentile</th>
@@ -20,23 +20,19 @@
     </tr>
     <tr>
       <th>Speed Rank</th>
-      <td><%= @attrs[:speed_data]['population'] - @attrs[:speed_data]['below_karma_per_day'] %> / <%= @attrs[:speed_data]['population'] %></td>
+      <td><%= (@attrs[:speed_data]['population'] - @attrs[:speed_data]['below_karma_per_day']).ordinalize %> / <%= @attrs[:speed_data]['population'] %></td>
     </rt>
     <tr>
       <th>Speed Percentile</th>
       <td><%= number_with_precision(@attrs[:speed_data]['percentile'] * 100) %>%</td>
     </tr>
     <tr>
-      <th>Rank Among Other (<a href="/month/<%= @attrs['date_registered'].strftime("%B-%Y").downcase %>"><%= @attrs["date_registered"].strftime("%B %Y") %></a>)</th>
-      <td><%= @attrs[:month_data]['population'] - @attrs[:month_data]['below_karma'] %> / <%= @attrs[:month_data]['population'] %></td>
+      <th>Rank Among Other <a href="/month/<%= @attrs['date_registered'].strftime("%B-%Y").downcase %>"><%= @attrs["date_registered"].strftime("%B %Y") %></a></th>
+      <td><%= (@attrs[:month_data]['population'] - @attrs[:month_data]['below_karma']).ordinalize %> / <%= @attrs[:month_data]['population'] %></td>
     </tr>
     <tr>  
       <th>Month Percentile</th>
       <td><%= number_with_precision(@attrs[:month_data]["percentile"] * 100) %>%</td>
-    </tr>
-    <tr>  
-      <th>Karma</th>
-      <td><%= @attrs['karma'] %></td>
     </tr>
   </table>
 </div>
