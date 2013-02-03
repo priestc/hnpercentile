@@ -1,8 +1,4 @@
 class IndexController < ApplicationController
-  caches_page :overall, :expires_in => 5.minutes
-  caches_page :superstars, :expires_in => 5.minutes
-  caches_page :months, :expires_in => 55.minutes
-  
   def show
     @member = Member.where(:username => params[:username]).first
     if not @member
@@ -85,19 +81,25 @@ class IndexController < ApplicationController
   end
   
   def all_months
-    @month_names = Member.order('date_registered').map { |d| d.date_registered.strftime('%B %Y') }.uniq
     total_users = Member.count
     total_karma = Member.sum('karma')
     
-    @months = {}
-    @month_names.each do |month_year|
-      data = {}
-      month, year = month_year.split(' ')
-      users = Member.users_for_month(month, year)
-      data[:users_percent] = users.count / total_users.to_f * 100
-      data[:karma_percent] = users.sum('karma') / total_karma.to_f * 100
-      data[:link] = month_year.downcase.sub(' ', '-')
-      @months[month_year] = data
+    @month_names = Rails.cache.fetch('month_names', :expires_in => 20.hours) do
+      Member.order('date_registered').map { |d| d.date_registered.strftime('%B %Y') }.uniq
+    end
+    
+    @months = Rails.cache.fetch('month_data', :expires_in => 20.hours) do
+      months = {}
+      @month_names.each do |month_year|
+        data = {}
+        month, year = month_year.split(' ')
+        users = Member.users_for_month(month, year)
+        data[:users_percent] = users.count / total_users.to_f * 100
+        data[:karma_percent] = users.sum('karma') / total_karma.to_f * 100
+        data[:link] = month_year.downcase.sub(' ', '-')
+        months[month_year] = data
+      end
+      months
     end
     
     respond_to do |format|
