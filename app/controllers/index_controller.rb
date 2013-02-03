@@ -20,7 +20,11 @@ class IndexController < ApplicationController
   def month
     @month = params['month']
     @year = params['year']
-    @members = Member.users_for_month(@month, @year)
+    
+    @members = Rails.cache.fetch("month-#@month-#@year", :expires_in => 10.minutes) do
+      Member.users_for_month(@month, @year)
+    end
+    
     @max_karma = @members.first.karma
     @percent_of_total_by_users = @members.count / Member.count.to_f * 100
     @percent_of_total_by_karma = @members.sum(:karma) / Member.sum(:karma).to_f * 100
@@ -42,7 +46,9 @@ class IndexController < ApplicationController
   end
   
   def overall
-    @members = Member.order("karma DESC").limit(200)
+    @members = Rails.cache.fetch("top_karma", :expires_in => 10.minutes) do 
+      Member.order("karma DESC").limit(200)
+    end
     @max_karma = @members.first.karma
     @max_age = 0
     @members.each do |member|
