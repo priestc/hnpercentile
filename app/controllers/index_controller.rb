@@ -1,8 +1,9 @@
 class IndexController < ApplicationController
   def show
-    @member = Member.where(:username => params[:username]).first
+    uname = params[:username].strip
+    @member = Member.where(:username => uname).first
     if not @member
-      @member = Member.make_from_api(params[:username])
+      @member = Member.make_from_api(uname)
     else
       @member.update_karma(:force => true)
     end
