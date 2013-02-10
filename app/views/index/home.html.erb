@@ -1,5 +1,6 @@
 <div id="content">
   <h1>Hacker News Karma Tracker</h1>
+  <div class="fb-like" data-href="http://hn-karma-tracker.herokuapp.com/" data-send="true" data-width="450" data-show-faces="true"></div>
   <p>
     Currently tracking <strong><%= @total_users %></strong> users.
   </p>
@@ -37,6 +38,9 @@
   <a href="/overall">Overall karma leaders</a><br>
   <a href="/superstars">Karma Superstars</a><br>
   <a href="/months">All registration months</a>
+  <h2>Interesting facts</h2>
+  In order to downvote comments, you need a karma of 500.
+  Currently <strong><%= number_with_precision @downvote_percentage %></strong>% of users have a karma above 500.
   <h2>How it works</h2>
   <p>A process crawls all items posted on <a href="http://news.ycombinator.com/">Hacker News</a> (link submissions, comments, etc) every
   10 minutes, collects usernames and karma values and stores them into a database that this site uses.
@@ -45,3 +49,11 @@
   the <a href="http://www.hnsearch.com/api">HNSearch API</a>. See code on <a href="https://github.com/priestc/hnpercentile">Github</a>. Contact: nbvfour at gmail.com.
   </p>
 </div>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=331657940258873";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>

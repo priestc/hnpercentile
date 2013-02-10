@@ -65,6 +65,7 @@ class IndexController < ApplicationController
   
   def home
     @total_users = Member.count
+    @downvote_percentage = Member.where("karma > 500").count / @total_users.to_f * 100
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: {} }
