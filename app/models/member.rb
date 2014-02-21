@@ -12,13 +12,13 @@ class Member < ActiveRecord::Base
   end
   
   def self.crawl_and_make_users
-    url = "http://api.thriftdb.com/api.hnsearch.com/items/_search?sortby=create_ts%20desc&limit=100"
+    url = "http://hnsearch.algolia.com/api/v1/search_by_date"
     doc = open(url).read
     j = JSON.parse(doc)
     new_members = 0
     updated_karma = 0
-    j['results'].each do |item|
-      username = item['item']['username']
+    j['hits'].each do |item|
+      username = item['username']
       member = self.where(:username => username).first
       if not member
         sleep 1.0 # to be nice to the API provider
@@ -33,7 +33,7 @@ class Member < ActiveRecord::Base
   end
 
   def self.make_from_api(username)
-    url = "http://api.thriftdb.com/api.hnsearch.com/users/" + username
+    url = "http://hnsearch.algolia.com/api/v1/users/" + username
     doc = open(url).read
     j = JSON.parse(doc)
     
@@ -57,7 +57,7 @@ class Member < ActiveRecord::Base
     
   def update_karma(force=false)
     if updated_at < DateTime.now - 6.hours or force
-      url = "http://api.thriftdb.com/api.hnsearch.com/users/" + username
+      url = "http://hnsearch.algolia.com/api/v1/users/" + username
       doc = open(url).read
       j = JSON.parse(doc)
       self.karma = j['karma']
