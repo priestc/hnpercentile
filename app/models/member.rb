@@ -18,7 +18,7 @@ class Member < ActiveRecord::Base
     new_members = 0
     updated_karma = 0
     j['hits'].each do |item|
-      username = item['username']
+      username = item['author']
       member = self.where(:username => username).first
       if not member
         sleep 1.0 # to be nice to the API provider
