@@ -15,7 +15,11 @@ class Member < ActiveRecord::Base
  
     p "DEBUG: crawl_and_make_users"
 
-    url = "http://hnsearch.algolia.com/api/v1/search_by_date?hitsPerPage=1000"
+    # Instead of constantly checking every user, we just check the users who
+    # most made the most recent 100 comments (even though it is always possible 
+    # for older comments to get upvoted)
+    # TODO: be careful in how many queries we make, delay between queries
+    url = "http://hnsearch.algolia.com/api/v1/search_by_date?hitsPerPage=100"
     doc = open(url).read
     j = JSON.parse(doc)
     new_members = 0
@@ -36,14 +40,11 @@ class Member < ActiveRecord::Base
   end
 
   def self.make_from_api(username)
-    p "DEBUG: make_from_api"
-
     url = "http://hnsearch.algolia.com/api/v1/users/" + username
     doc = open(url).read
     j = JSON.parse(doc)
     
-    puts "DEBUG - "
-    puts j['created_at']
+    #puts j['created_at']
     date_registered =  DateTime.new(2013,1)     #TODO: parse this correctly  ex: 2009-08-20T07:59:16.000Z
 
     karma = j['karma']
@@ -64,8 +65,6 @@ class Member < ActiveRecord::Base
   end
     
   def update_karma(force=false)
-    p "DEBUG update_karma"
-
     if updated_at < DateTime.now - 6.hours or force
       url = "http://hnsearch.algolia.com/api/v1/users/" + username
       doc = open(url).read
