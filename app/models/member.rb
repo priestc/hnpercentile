@@ -15,7 +15,7 @@ class Member < ActiveRecord::Base
  
     p "DEBUG: crawl_and_make_users"
 
-    url = "http://hnsearch.algolia.com/api/v1/search_by_date"
+    url = "http://hnsearch.algolia.com/api/v1/search_by_date?hitsPerPage=1000"
     doc = open(url).read
     j = JSON.parse(doc)
     new_members = 0
