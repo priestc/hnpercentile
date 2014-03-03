@@ -13,7 +13,7 @@ class Member < ActiveRecord::Base
   
   def self.crawl_and_make_users
  
-    p "crawl_and_make_users"
+    p "DEBUG: crawl_and_make_users"
 
     url = "http://hnsearch.algolia.com/api/v1/search_by_date"
     doc = open(url).read
@@ -36,7 +36,7 @@ class Member < ActiveRecord::Base
   end
 
   def self.make_from_api(username)
-    p "make_from_api"
+    p "DEBUG: make_from_api"
 
     url = "http://hnsearch.algolia.com/api/v1/users/" + username
     doc = open(url).read
@@ -61,8 +61,8 @@ class Member < ActiveRecord::Base
   end
     
   def update_karma(force=false)
-    p "update_karma"
-        
+    p "DEBUG update_karma"
+
     if updated_at < DateTime.now - 6.hours or force
       url = "http://hnsearch.algolia.com/api/v1/users/" + username
       doc = open(url).read
