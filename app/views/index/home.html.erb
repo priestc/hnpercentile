@@ -43,15 +43,10 @@
   Currently <strong><%= number_with_precision @downvote_percentage %></strong>% of users have a karma above 500.
   <h2>How it works</h2>
   <p>A process crawls all items posted on <a href="http://news.ycombinator.com/">Hacker News</a> (link submissions, comments, etc) every
-  10 minutes, collects usernames and karma values and stores them into a database that this site uses.  All data comes from
-  the <a href="http://hnsearch.algolia.com/api">HNSearch API (powered by Algolia)</a>. See code on <a href="https://github.com/priestc/hnpercentile">Github</a>. Contact: nbvfour at gmail.com.
-  </p><p>
-  Updated March 2014 by Jared Sohn (jared.sohn at gmail.com) to use Algolia's HNSearch API.  New features include:
-  <ul>
-    <li>Separates out comment and story karma (excluding what has been deleted)</li>
-    <li>Graphs karma by date on a per user and on an aggregate basis</li>
-    <li>Includes all users who have ever commented on Hacker News (used to only include those who have commented since January 2013)</li>
-  </ul>
+  10 minutes, collects usernames and karma values and stores them into a database that this site uses.
+  Users who have not made a submission or comment on the site after
+  January 25th 2013 may not be included in this site's database. All data comes from
+  the <a href="http://www.hnsearch.com/api">HNSearch API</a>. See code on <a href="https://github.com/priestc/hnpercentile">Github</a>. Contact: nbvfour at gmail.com.
   </p>
 </div>
 <div id="fb-root"></div>
