@@ -44,7 +44,13 @@ class Member < ActiveRecord::Base
     
     puts "DEBUG - "
     puts j['created_at']
-    date_registered = DateTime.strptime(j['created_at'])
+    #TODO: parse this correctly
+    date_registered =  Time.now
+    #2009-08-20T07:59:16.000Z
+
+
+
+    strptime(j['created_at'] # TODO: need to parse this
     karma = j['karma']
     date_range = (Date.today - date_registered).to_f
     
