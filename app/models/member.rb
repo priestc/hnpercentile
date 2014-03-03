@@ -12,13 +12,6 @@ class Member < ActiveRecord::Base
   end
   
   def self.crawl_and_make_users
- 
-    p "DEBUG: crawl_and_make_users"
-
-    # Instead of constantly checking every user, we just check the users who
-    # most made the most recent 100 comments (even though it is always possible 
-    # for older comments to get upvoted)
-    # TODO: be careful in how many queries we make, delay between queries
     url = "http://hnsearch.algolia.com/api/v1/search_by_date?hitsPerPage=100"
     doc = open(url).read
     j = JSON.parse(doc)
